@@ -1,0 +1,303 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<title>ZEVULUN VELOCITY 𐤆𐤁𐤅𐤋𐤏 — Logbook</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/pako/2.1.0/pako.min.js"></script>
+<style>
+:root{--paper:#F6F4EC;--card:#FFFFFF;--ink:#152A20;--sub:#5C6B60;--deep:#0F3D2E;--deep2:#145C41;--emerald:#1E7A4C;--line:#DCD6C6;--ok:#2EA36B;--warn:#B7791F;--bad:#A83232;--t0bg:#E7ECE6;--t0fg:#44584C;--t1bg:#CDE7D5;--t1fg:#14532D;--t2bg:#0E5C36;--t2fg:#F2FBF4}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:-apple-system,"SF Pro Text",Segoe UI,Roboto,Helvetica,Arial,sans-serif;padding:10px 12px calc(26px + env(safe-area-inset-bottom));-webkit-text-size-adjust:100%}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:12px 14px;margin:10px 0;box-shadow:0 1px 2px rgba(15,61,46,.06)}
+.mast{background:linear-gradient(160deg,var(--deep),var(--deep2));color:#F6F4EC;border-radius:16px;padding:14px 14px 12px;margin:2px 0 10px}
+.brand{font-weight:800;letter-spacing:.6px;font-size:15px}.glyph{opacity:.9;letter-spacing:3px;font-weight:600}
+.price{font-size:42px;font-weight:800;font-variant-numeric:tabular-nums;letter-spacing:.4px;line-height:1.05;margin:4px 0 2px}
+.mrow{display:flex;flex-wrap:wrap;gap:6px 14px;font-size:13px;opacity:.95}
+.num{font-variant-numeric:tabular-nums;font-weight:700}
+.beacons{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:8px;font-size:11.5px;opacity:.92}
+.dot{display:inline-block;width:8px;height:8px;border-radius:50%;margin-right:5px;background:var(--bad);vertical-align:baseline}
+.dot.ok{background:var(--ok)}.dot.warn{background:#E2B451}
+h2{font-size:13px;letter-spacing:1.2px;margin:0 0 8px;color:var(--deep);text-transform:uppercase}
+h2 .gloss{color:var(--sub);font-weight:500;text-transform:none;letter-spacing:.2px}
+.chips{display:flex;flex-wrap:wrap;gap:8px}
+.chip{display:inline-block;padding:5px 12px;border-radius:999px;font-size:13px;font-weight:800;letter-spacing:.4px}
+.chip.small{font-size:11.5px;font-weight:700;padding:3px 10px}
+.t0{background:var(--t0bg);color:var(--t0fg)}.t1{background:var(--t1bg);color:var(--t1fg)}.t2{background:var(--t2bg);color:var(--t2fg)}
+.neutral{background:#EFEBDD;color:#4E5A50}.hz{background:#FBEED7;color:#8A5A12}
+.sub{color:var(--sub);font-size:12px;line-height:1.45}
+.narr{font-size:14.5px;line-height:1.55;white-space:pre-line}
+.narr b{color:var(--deep)}
+.seg{display:flex;gap:6px;flex-wrap:wrap;margin:8px 0 2px}
+.seg button{border:1px solid var(--line);background:#F2EFE4;color:var(--ink);border-radius:999px;padding:5px 11px;font-size:12.5px;font-weight:700}
+.seg button.on{background:var(--deep);color:#F6F4EC;border-color:var(--deep)}
+details.path{border:1px solid var(--line);border-radius:12px;margin:7px 0;background:#FDFCF7;overflow:hidden}
+details.path summary{list-style:none;display:flex;align-items:center;gap:10px;padding:10px 12px;cursor:pointer}
+details.path summary::-webkit-details-marker{display:none}
+.pT{font-weight:800;font-size:15px;min-width:56px}
+.pP{font-weight:800;font-size:19px;font-variant-numeric:tabular-nums;color:var(--deep)}
+.tag{margin-left:auto;font-size:10.5px;color:var(--sub);border:1px solid var(--line);border-radius:6px;padding:2px 6px}
+.pBody{padding:2px 12px 11px;font-size:13px;border-top:1px dashed var(--line)}
+.schips{display:flex;flex-wrap:wrap;gap:6px;margin:8px 0}
+.schips span{background:#EFF5EF;border:1px solid #D7E4D7;border-radius:8px;padding:3px 8px;font-size:11.5px;font-weight:700;color:#1F5136}
+.sideln{margin:5px 0;font-variant-numeric:tabular-nums}
+.gauge{height:14px;border-radius:999px;background:linear-gradient(90deg,#C9DFCF,#EFEBDD 50%,#C9DFCF);position:relative;margin:10px 0 6px;border:1px solid var(--line)}
+.needle{position:absolute;top:-5px;width:3px;height:24px;background:var(--deep);border-radius:2px;left:50%}
+.btn{border:1px solid var(--deep);background:var(--deep);color:#F6F4EC;border-radius:11px;padding:10px 14px;font-size:14px;font-weight:800;letter-spacing:.3px}
+.btn.ghost{background:transparent;color:var(--deep)}
+.btn.warn{border-color:var(--bad);background:transparent;color:var(--bad)}
+.btnrow{display:flex;flex-wrap:wrap;gap:8px;margin-top:8px}
+.agrid{width:100%;border-collapse:collapse;font-size:12.5px;margin-top:8px}
+.agrid th,.agrid td{border-bottom:1px solid var(--line);padding:6px 4px;text-align:left;font-variant-numeric:tabular-nums}
+.agrid th{color:var(--sub);font-size:11px;text-transform:uppercase;letter-spacing:.6px}
+.ok2{color:var(--emerald);font-weight:800}
+#eventLog{max-height:190px;overflow:auto;font:11px/1.5 ui-monospace,Menlo,monospace;background:#101F18;color:#CFE7D8;border-radius:10px;padding:9px;white-space:pre-wrap;word-break:break-word}
+#exportBox{display:none;margin-top:10px}#exportBox.show{display:block}
+#exportText{width:100%;height:110px;font:10.5px ui-monospace,monospace;border:1px solid var(--line);border-radius:8px;padding:6px;background:#FDFCF7}
+.status{font-size:12px;margin:6px 0;color:var(--emerald);font-weight:700}
+.status.bad{color:var(--bad)}.status.warn{color:var(--warn)}
+footer{margin:14px 2px 0;font-size:10.5px;color:var(--sub);line-height:1.5}
+</style>
+</head>
+<body>
+
+<div class="mast">
+  <div class="brand">ZEVULUN VELOCITY <span class="glyph">𐤆𐤁𐤅𐤋𐤏</span> · ZV-4B <span id="roleTag" style="float:right;font-weight:600;font-size:11px;opacity:.85"></span></div>
+  <div class="price num" id="px">—</div>
+  <div class="mrow">
+    <span>Δ24h <span class="num" id="chgPts">—</span>p</span>
+    <span><span class="num" id="chgPct">—</span>%</span>
+    <span>H <span class="num" id="hi24">—</span></span>
+    <span>L <span class="num" id="lo24">—</span></span>
+  </div>
+  <div class="beacons">
+    <span><i class="dot" id="dPulse"></i>BINGX PULSE <span id="agePulse">—</span></span>
+    <span><i class="dot" id="dFlow"></i>BINANCE FLOW <span id="ageFlow">—</span></span>
+    <span><i class="dot" id="dDepth"></i>DEPTH <span id="ageDepth">—</span></span>
+    <span>route <span id="route">BOOT</span></span>
+    <span>rescues <span id="rescues">0</span></span>
+  </div>
+</div>
+
+<div class="card">
+  <h2>Sea State <span class="gloss">· ZV-TIDE energy & ZV-DRAUGHT point-load</span></h2>
+  <div class="chips">
+    <span class="chip neutral" id="tideChip">TIDE —</span>
+    <span class="chip neutral" id="drChip">DRAUGHT —</span>
+    <span class="chip small hz" id="ageChip" style="display:none"></span>
+  </div>
+  <div class="sub" id="seaSub" style="margin-top:8px">Awaiting candle memory…</div>
+</div>
+
+<div class="card">
+  <h2>Lighthouse <span class="gloss">· the narrator (OOS frequencies only)</span></h2>
+  <div class="seg" id="focusSeg"></div>
+  <div class="narr" id="narr">Charging the lamp…</div>
+</div>
+
+<div class="card">
+  <h2>Pathway Board <span class="gloss">· ZV-SAIL runway family, tap a pathway</span></h2>
+  <div id="board"></div>
+</div>
+
+<div class="card">
+  <h2>Micro-Pulse <span class="gloss">· ZV-PULSE 13-minute fill-timing dial only</span></h2>
+  <div class="gauge"><div class="needle" id="pNeedle"></div></div>
+  <div class="num" id="pulseTxt" style="font-size:16px;font-weight:800">—</div>
+  <div class="sub" id="pulseStatus">Awaiting flow & depth legs…</div>
+  <div class="sub">Honest ceiling ≈55% at the extremes (per-year AUC .531–.534). Never a side call.</div>
+</div>
+
+<div class="card">
+  <h2>Anchor Watch <span class="gloss">· ZV-ANCHOR live adverse-path truth from your mark</span></h2>
+  <div id="anchorBody"></div>
+</div>
+
+<div class="card">
+  <h2>Logbook <span class="gloss">· ZV-LOGBOOK events & state memory</span></h2>
+  <div id="eventLog"></div>
+  <div class="btnrow"><button class="btn ghost" id="sealBtn" type="button">Seal memory now</button></div>
+</div>
+
+<div class="card">
+  <h2>Vault <span class="gloss">· ZV-VAULT JSON save / share / resume</span></h2>
+  <div class="btnrow">
+    <button class="btn" id="exportBtn" type="button">Export JSON</button>
+    <button class="btn ghost" id="importBtn" type="button">Import / Resume</button>
+    <button class="btn warn" id="clearBtn" type="button">Clear session</button>
+  </div>
+  <input type="file" id="importInput" accept="application/json" style="display:none">
+  <div class="status" id="vaultStatus">Vault ready.</div>
+  <div id="exportBox">
+    <textarea id="exportText" readonly></textarea>
+    <div class="btnrow">
+      <button class="btn" id="downloadBtn" type="button">Download</button>
+      <button class="btn ghost" id="shareBtn" type="button">Share / Save</button>
+      <button class="btn ghost" id="copyBtn" type="button">Copy</button>
+      <button class="btn ghost" id="closeExportBtn" type="button">Close</button>
+    </div>
+  </div>
+</div>
+
+<footer>
+Conventions: 1 point = 0.0000001. Probabilities are out-of-sample frequencies from the 2023–2026 tape (seed-locked split); cell reliability max gap 5.9pp, per-pathway tide-level ≤2.6pp. Drag on live prints is measured from your anchor to the worst opposite excursion before the print (≈ marks intrabar-ambiguous minutes healed from candle memory). SIDE is spoken as a coin by permanent policy. No monetary values exist anywhere in this engine by design.
+</footer>
+
+<script>
+const ZVT={"v":"ZV4","point":1e-07,"horizonMin":480,"tideCuts":[54.1,177.7],"draughtCuts":[38.54,91.5],"reliabilityMaxGap":0.0591,"hazard":{"1-60m":0.2598,"60-240m":0.1168,"240-720m":0.0424,">720m":0.0132},"micro":{"mu":[-0.025716,-0.005739,-0.000111],"sd":[4.060297,0.066514,0.132444],"coef":[-0.09598,-0.041103,0.010047],"b":-0.020907},"fam":{"350_t0":{"p":0.6475,"s":[0.015,0.077,0.181,0.339,0.459,0.647],"r":0.569,"L":[0.355,112,246,406],"S":[0.398,102,234,416]},"350_t0_d1":{"p":0.9923,"s":[0.039,0.2,0.438,0.702,0.861,0.992],"r":0.986,"L":[0.526,181,374,642],"S":[0.758,144,300,471]},"350_t0_d2":{"p":0.6016,"s":[0.012,0.059,0.146,0.29,0.405,0.602],"r":0.534,"L":[0.331,102,221,362],"S":[0.35,94,213,392]},"350_t1":{"p":0.9968,"s":[0.425,0.776,0.911,0.97,0.986,0.997],"r":0.966,"L":[0.815,249,599,1170],"S":[0.83,238,564,1112]},"350_t1_d0":{"p":1.0,"s":[0.553,0.898,0.978,0.996,1.0,1.0],"r":1.0,"L":[0.835,265,649,1296],"S":[0.891,270,647,1247]},"350_t1_d1":{"p":0.9985,"s":[0.42,0.779,0.923,0.98,0.993,0.998],"r":0.974,"L":[0.826,262,641,1216],"S":[0.839,236,555,1110]},"350_t1_d2":{"p":0.9836,"s":[0.19,0.518,0.73,0.879,0.932,0.984],"r":0.941,"L":[0.732,185,384,701],"S":[0.67,188,429,752]},"350_t2":{"p":1.0,"s":[0.936,0.997,1.0,1.0,1.0,1.0],"r":1.0,"L":[0.927,289,831,1817],"S":[0.933,280,784,1799]},"350_t2_d0":{"p":1.0,"s":[0.956,0.999,1.0,1.0,1.0,1.0],"r":1.0,"L":[0.931,286,852,1922],"S":[0.944,278,803,1880]},"350_t2_d1":{"p":1.0,"s":[0.883,0.993,0.999,1.0,1.0,1.0],"r":1.0,"L":[0.916,292,779,1623],"S":[0.908,286,728,1610]},"350_t2_d2":{"p":1.0,"s":[0.838,0.979,0.997,0.997,1.0,1.0],"r":1.0,"L":[0.94,288,724,1381],"S":[0.835,219,654,2086]},"450_t0":{"p":0.544,"s":[0.008,0.041,0.11,0.234,0.343,0.544],"r":0.488,"L":[0.28,120,262,430],"S":[0.319,109,246,429]},"450_t0_d1":{"p":0.9522,"s":[0.021,0.103,0.275,0.523,0.711,0.952],"r":0.934,"L":[0.441,195,417,691],"S":[0.686,157,302,461]},"450_t0_d2":{"p":0.4895,"s":[0.006,0.032,0.087,0.195,0.293,0.489],"r":0.44,"L":[0.257,106,239,373],"S":[0.271,97,223,408]},"450_t1":{"p":0.9897,"s":[0.273,0.63,0.825,0.933,0.966,0.99],"r":0.943,"L":[0.766,295,684,1285],"S":[0.784,275,641,1206]},"450_t1_d0":{"p":1.0,"s":[0.362,0.77,0.93,0.987,0.996,1.0],"r":1.0,"L":[0.791,309,765,1478],"S":[0.863,323,727,1376]},"450_t1_d1":{"p":0.9932,"s":[0.267,0.627,0.833,0.946,0.977,0.993],"r":0.958,"L":[0.778,314,712,1329],"S":[0.793,268,639,1193]},"450_t1_d2":{"p":0.9549,"s":[0.119,0.36,0.58,0.773,0.861,0.955],"r":0.893,"L":[0.663,205,419,741],"S":[0.591,201,443,747]},"450_t2":{"p":1.0,"s":[0.849,0.984,0.998,1.0,1.0,1.0],"r":1.0,"L":[0.906,376,987,2082],"S":[0.914,353,934,2030]},"450_t2_d0":{"p":1.0,"s":[0.887,0.992,1.0,1.0,1.0,1.0],"r":1.0,"L":[0.911,382,1019,2208],"S":[0.929,357,966,2131]},"450_t2_d1":{"p":1.0,"s":[0.752,0.965,0.994,1.0,1.0,1.0],"r":1.0,"L":[0.891,362,918,1797],"S":[0.879,346,852,1773]},"450_t2_d2":{"p":1.0,"s":[0.703,0.919,0.967,0.985,0.997,1.0],"r":1.0,"L":[0.904,353,777,1430],"S":[0.808,286,948,2557]},"550_t0":{"p":0.4483,"s":[0.005,0.024,0.07,0.165,0.259,0.448],"r":0.406,"L":[0.22,128,272,443],"S":[0.257,116,255,436]},"550_t0_d1":{"p":0.8574,"s":[0.012,0.059,0.177,0.382,0.561,0.857],"r":0.826,"L":[0.341,213,468,824],"S":[0.604,158,289,435]},"550_t0_d2":{"p":0.3933,"s":[0.004,0.019,0.055,0.134,0.217,0.393],"r":0.358,"L":[0.203,117,247,374],"S":[0.211,104,234,433]},"550_t1":{"p":0.9784,"s":[0.173,0.497,0.723,0.88,0.935,0.978],"r":0.921,"L":[0.721,328,742,1375],"S":[0.739,308,705,1299]},"550_t1_d0":{"p":0.9998,"s":[0.235,0.633,0.854,0.964,0.991,1.0],"r":1.0,"L":[0.747,352,853,1631],"S":[0.834,362,783,1466]},"550_t1_d1":{"p":0.9856,"s":[0.168,0.49,0.727,0.893,0.947,0.986],"r":0.949,"L":[0.738,351,766,1390],"S":[0.748,300,715,1294]},"550_t1_d2":{"p":0.9056,"s":[0.072,0.257,0.446,0.655,0.773,0.906],"r":0.83,"L":[0.596,220,443,782],"S":[0.512,221,460,741]},"550_t2":{"p":0.9999,"s":[0.751,0.958,0.992,0.999,1.0,1.0],"r":1.0,"L":[0.884,446,1127,2291],"S":[0.895,415,1066,2241]},"550_t2_d0":{"p":1.0,"s":[0.801,0.974,0.997,1.0,1.0,1.0],"r":1.0,"L":[0.892,455,1177,2436],"S":[0.913,424,1116,2364]},"550_t2_d1":{"p":1.0,"s":[0.62,0.917,0.98,0.998,1.0,1.0],"r":1.0,"L":[0.861,427,1023,1932],"S":[0.849,393,933,1885]},"550_t2_d2":{"p":0.994,"s":[0.586,0.865,0.94,0.973,0.982,0.994],"r":0.9,"L":[0.877,388,932,1519],"S":[0.757,364,1112,2800]},"650_t0":{"p":0.3757,"s":[0.003,0.016,0.046,0.119,0.2,0.376],"r":0.346,"L":[0.177,132,281,458],"S":[0.215,117,259,439]},"650_t0_d1":{"p":0.7679,"s":[0.008,0.045,0.125,0.292,0.464,0.768],"r":0.735,"L":[0.285,230,476,973],"S":[0.537,151,273,413]},"650_t0_d2":{"p":0.3227,"s":[0.002,0.012,0.035,0.095,0.163,0.323],"r":0.298,"L":[0.161,121,254,381],"S":[0.173,103,246,464]},"650_t1":{"p":0.9616,"s":[0.112,0.388,0.626,0.819,0.896,0.962],"r":0.898,"L":[0.68,356,784,1428],"S":[0.696,333,756,1364]},"650_t1_d0":{"p":0.9983,"s":[0.151,0.503,0.764,0.926,0.973,0.998],"r":0.992,"L":[0.711,392,904,1738],"S":[0.801,388,845,1529]},"650_t1_d1":{"p":0.9733,"s":[0.109,0.382,0.628,0.833,0.913,0.973],"r":0.927,"L":[0.698,376,800,1422],"S":[0.706,324,771,1350]},"650_t1_d2":{"p":0.8396,"s":[0.049,0.183,0.341,0.545,0.673,0.84],"r":0.757,"L":[0.539,227,446,814],"S":[0.447,232,471,743]},"650_t2":{"p":0.9998,"s":[0.653,0.914,0.98,0.997,0.999,1.0],"r":1.0,"L":[0.863,512,1240,2434],"S":[0.875,476,1194,2442]},"650_t2_d0":{"p":1.0,"s":[0.711,0.94,0.989,0.999,1.0,1.0],"r":1.0,"L":[0.873,527,1296,2569],"S":[0.897,490,1255,2577]},"650_t2_d1":{"p":1.0,"s":[0.501,0.846,0.956,0.994,0.999,1.0],"r":1.0,"L":[0.835,477,1104,2024],"S":[0.821,437,1026,1998]},"650_t2_d2":{"p":0.982,"s":[0.483,0.79,0.889,0.943,0.979,0.982],"r":0.838,"L":[0.856,422,997,1639],"S":[0.73,419,1405,2917]},"750_t0":{"p":0.313,"s":[0.002,0.011,0.033,0.088,0.154,0.313],"r":0.29,"L":[0.143,138,284,469],"S":[0.18,112,259,454]},"750_t0_d1":{"p":0.6843,"s":[0.003,0.031,0.09,0.229,0.39,0.684],"r":0.653,"L":[0.257,230,460,972],"S":[0.468,141,267,398]},"750_t0_d2":{"p":0.2626,"s":[0.002,0.008,0.025,0.069,0.122,0.263],"r":0.244,"L":[0.127,125,254,387],"S":[0.141,100,247,483]},"750_t1":{"p":0.9427,"s":[0.075,0.301,0.534,0.754,0.852,0.943],"r":0.878,"L":[0.641,378,822,1478],"S":[0.656,354,794,1410]},"750_t1_d0":{"p":0.9946,"s":[0.099,0.398,0.675,0.879,0.95,0.995],"r":0.985,"L":[0.676,429,948,1853],"S":[0.773,411,890,1534]},"750_t1_d1":{"p":0.9578,"s":[0.073,0.295,0.531,0.764,0.87,0.958],"r":0.91,"L":[0.659,395,828,1445],"S":[0.664,346,803,1402]},"750_t1_d2":{"p":0.7763,"s":[0.032,0.132,0.266,0.461,0.582,0.776],"r":0.695,"L":[0.495,238,473,843],"S":[0.385,244,480,742]},"750_t2":{"p":0.9997,"s":[0.567,0.863,0.958,0.992,0.998,1.0],"r":1.0,"L":[0.842,565,1337,2537],"S":[0.856,531,1310,2592]},"750_t2_d0":{"p":1.0,"s":[0.628,0.899,0.974,0.996,0.999,1.0],"r":1.0,"L":[0.853,582,1403,2715],"S":[0.881,552,1389,2781]},"750_t2_d1":{"p":0.9997,"s":[0.405,0.767,0.919,0.982,0.996,1.0],"r":1.0,"L":[0.811,525,1188,2115],"S":[0.796,484,1115,2126]},"750_t2_d2":{"p":0.979,"s":[0.411,0.736,0.853,0.925,0.967,0.979],"r":0.857,"L":[0.841,461,1095,1819],"S":[0.694,495,1466,3397]},"850_t0":{"p":0.2517,"s":[0.001,0.008,0.024,0.067,0.118,0.252],"r":0.234,"L":[0.112,139,292,457],"S":[0.146,110,270,480]},"850_t0_d1":{"p":0.586,"s":[0.003,0.021,0.069,0.182,0.315,0.586],"r":0.555,"L":[0.22,212,417,669],"S":[0.391,134,267,403]},"850_t0_d2":{"p":0.2061,"s":[0.001,0.006,0.018,0.051,0.091,0.206],"r":0.191,"L":[0.096,128,262,396],"S":[0.113,99,269,515]},"850_t1":{"p":0.9204,"s":[0.051,0.234,0.454,0.687,0.806,0.92],"r":0.853,"L":[0.602,395,848,1514],"S":[0.618,371,826,1433]},"850_t1_d0":{"p":0.9864,"s":[0.067,0.314,0.586,0.824,0.921,0.986],"r":0.966,"L":[0.642,468,997,1935],"S":[0.744,426,925,1544]},"850_t1_d1":{"p":0.9382,"s":[0.051,0.228,0.447,0.696,0.822,0.938],"r":0.888,"L":[0.617,406,848,1460],"S":[0.626,366,829,1428]},"850_t1_d2":{"p":0.7145,"s":[0.022,0.096,0.216,0.38,0.51,0.715],"r":0.636,"L":[0.454,237,490,851],"S":[0.327,247,480,721]},"850_t2":{"p":0.9996,"s":[0.491,0.804,0.93,0.983,0.995,1.0],"r":1.0,"L":[0.819,615,1416,2653],"S":[0.838,583,1413,2757]},"850_t2_d0":{"p":1.0,"s":[0.552,0.85,0.954,0.992,0.999,1.0],"r":1.0,"L":[0.832,636,1507,2838],"S":[0.865,607,1506,2960]},"850_t2_d1":{"p":0.9993,"s":[0.328,0.682,0.867,0.962,0.988,0.999],"r":0.992,"L":[0.782,565,1247,2171],"S":[0.772,522,1162,2226]},"850_t2_d2":{"p":0.979,"s":[0.357,0.664,0.814,0.898,0.964,0.979],"r":0.887,"L":[0.823,465,1095,1843],"S":[0.682,555,1507,3519]},"950_t0":{"p":0.2024,"s":[0.001,0.006,0.018,0.053,0.095,0.202],"r":0.187,"L":[0.089,152,300,476],"S":[0.117,109,278,487]},"950_t0_d1":{"p":0.5109,"s":[0.002,0.014,0.05,0.145,0.262,0.511],"r":0.485,"L":[0.195,200,388,599],"S":[0.332,135,273,421]},"950_t0_d2":{"p":0.1603,"s":[0.001,0.004,0.014,0.04,0.071,0.16],"r":0.148,"L":[0.074,142,276,417],"S":[0.089,96,280,517]},"950_t1":{"p":0.895,"s":[0.035,0.184,0.385,0.622,0.755,0.895],"r":0.829,"L":[0.565,411,874,1559],"S":[0.581,389,846,1445]},"950_t1_d0":{"p":0.9775,"s":[0.046,0.249,0.508,0.763,0.884,0.978],"r":0.955,"L":[0.609,491,1042,1980],"S":[0.718,446,945,1560]},"950_t1_d1":{"p":0.9144,"s":[0.035,0.178,0.375,0.626,0.766,0.914],"r":0.862,"L":[0.578,419,868,1487],"S":[0.587,381,841,1441]},"950_t1_d2":{"p":0.6489,"s":[0.016,0.078,0.182,0.322,0.451,0.649],"r":0.571,"L":[0.419,239,504,881],"S":[0.278,242,465,713]},"950_t2":{"p":0.9992,"s":[0.426,0.747,0.898,0.971,0.992,0.999],"r":0.99,"L":[0.799,655,1492,2744],"S":[0.82,628,1492,2904]},"950_t2_d0":{"p":0.9999,"s":[0.485,0.799,0.931,0.985,0.997,1.0],"r":1.0,"L":[0.814,684,1604,2949],"S":[0.847,660,1577,3119]},"950_t2_d1":{"p":0.998,"s":[0.266,0.609,0.814,0.938,0.978,0.998],"r":0.989,"L":[0.757,598,1285,2228],"S":[0.75,554,1221,2366]},"950_t2_d2":{"p":0.979,"s":[0.312,0.607,0.769,0.85,0.94,0.979],"r":0.909,"L":[0.805,470,1093,1827],"S":[0.661,563,1576,4078]}}};
+const CFG=Object.freeze({engine:'ZEVULUN_VELOCITY',version:'ZV-4B',symbolBingX:'1000PEPE-USDT',symbolBinance:'1000PEPEUSDT',tickerChannel:'1000PEPE-USDT@ticker',point:ZVT.point,maxCandles:3000,lockTtl:9000,hbMs:2500});
+const STORE={candles:'ZV_KEEL_CANDLES_V1',state:'ZV_LOGBOOK_STATE_V1',lock:'ZV_WATCH_LOCK_V1'};
+const REST_KLINES=[
+ {name:'BINANCE_REST',url:'https://fapi.binance.com/fapi/v1/klines?symbol=1000PEPEUSDT&interval=1m&limit=1000'},
+ {name:'BINGX_V3_REST',url:'https://open-api.bingx.com/openApi/swap/v3/quote/klines?symbol=1000PEPE-USDT&interval=1m&limit=1000'},
+ {name:'BINGX_V2_REST',url:'https://open-api.bingx.com/openApi/swap/v2/quote/klines?symbol=1000PEPE-USDT&interval=1m&limit=1000'}];
+const TG=[350,450,550,650,750,850,950];
+const S={price:null,lastLive:0,lastSource:'—',candles:[],candleMap:new Map(),ws:null,wsFlow:null,wsFb:null,socketGen:0,lastConnectAttempt:0,bingxTries:0,fbTries:0,bootstrapPromise:null,lastWakeAt:0,lastRender:0,lastMinute:0,
+ guardian:{pulseTimer:null,watchdogTimer:null,heartbeatTimer:null,lastRescue:0,rescueCount:0,lastError:'NONE',lastRoute:'BOOT',lastMessageAt:0},
+ continuity:{store:STORE.candles,retainedBars:0,restoredBars:0,lastSavedAt:0,lastMergedAt:0,lastBootstrapRoute:'NONE',lastError:'NONE',saveCount:0,currentMinutePreserved:true},
+ t24:{hi:null,lo:null,chgPts:null,chgPct:null,at:0},
+ depth:{ring:[],at:0,flowAt:0},
+ sea:{tide:-1,dr:-1,age:0,r39:null,prevTide:-2,series:[]},
+ focusT:550,anchor:null,anchorHist:[],events:[],
+ watch:{id:Math.random().toString(36).slice(2,10).toUpperCase(),role:'PENDING',hb:null}};
+function now(){return Date.now()}
+function iso(t=now()){return new Date(t).toISOString()}
+function q(id){return document.getElementById(id)}
+function minuteKey(t){return Math.floor(t/60000)*60000}
+function fmtPrice(p){return p?Number(p).toFixed(7):'—'}
+function hhmm(t){const d=new Date(t);return String(d.getHours()).padStart(2,'0')+':'+String(d.getMinutes()).padStart(2,'0')}
+function ageTxt(t){if(!t)return '—';const s=Math.round((now()-t)/1000);return s<90?s+'s':Math.round(s/60)+'m'}
+function isPrimary(){return S.watch.role==='PRIMARY'}
+function log(msg,obj){const row={ts:iso(),msg,...(obj||{})};S.events.unshift(row);S.events=S.events.slice(0,400);const e=q('eventLog');if(e)e.textContent=(row.ts.slice(11,19)+' '+msg+(obj?' · '+JSON.stringify(obj):'')+'\n')+(e.textContent||'').slice(0,14000)}
+/* ---------- ZV-WATCHKEEPER: frame decode & price extraction (ported plumbing) ---------- */
+async function decodeFrame(data){if(typeof data==='string')return data;let ab=null;if(data instanceof Blob)ab=await data.arrayBuffer();else if(data instanceof ArrayBuffer)ab=data;if(!ab)return '';try{if(window.DecompressionStream){const stream=new Blob([ab]).stream().pipeThrough(new DecompressionStream('gzip'));return new TextDecoder().decode(await new Response(stream).arrayBuffer())}}catch(e){}try{if(window.pako)return window.pako.ungzip(new Uint8Array(ab),{to:'string'})}catch(e){}try{return new TextDecoder().decode(ab)}catch(e){return ''}}
+function extractPrice(m){for(const o of [m&&m.data,m&&m.tick,m]){if(!o||typeof o!=='object')continue;const p=parseFloat(o.c??o.lastPrice??o.price??o.close??o.p??o.last??o.lp);if(p>0)return p}return null}
+/* ---------- ZV-KEEL: candle memory & continuity (ported plumbing) ---------- */
+function normalizeCandle(c){if(Array.isArray(c))return {t:minuteKey(+c[0]||now()),o:+c[1],h:+c[2],l:+c[3],c:+c[4],v:+c[5]||0,n:+c[8]||0,tb:+c[9]||0,source:'bootstrap'};if(c&&typeof c==='object'){const t=+(c.t??c.time??c.openTime??c.T);const o=+(c.o??c.open),h=+(c.h??c.high),l=+(c.l??c.low),cl=+(c.c??c.close),v=+(c.v??c.volume)||0;if(t&&cl>0&&h>0&&l>0)return {t:minuteKey(t),o:o||cl,h,l,c:cl,v,n:+c.n||0,tb:+(c.tb??0),source:c.source||'import'}}return null}
+function rebuildMap(){S.candleMap=new Map();for(const c of S.candles)S.candleMap.set(c.t,c)}
+function updateCandle(px,t=now()){const k=minuteKey(t);let c=S.candleMap.get(k);if(!c){const prev=S.candles.length?S.candles[S.candles.length-1].c:px;c={t:k,o:prev,h:Math.max(prev,px),l:Math.min(prev,px),c:px,v:0,n:1,tb:0,source:'live'};S.candleMap.set(k,c);S.candles.push(c);S.candles.sort((a,b)=>a.t-b.t);if(S.candles.length>CFG.maxCandles){const old=S.candles.shift();S.candleMap.delete(old.t)}onNewMinute(k)}else{c.h=Math.max(c.h,px);c.l=Math.min(c.l,px);c.c=px;c.n=(c.n||0)+1}}
+function applyKline(k){const t=minuteKey(+k.t);const inc={t,o:+k.o,h:+k.h,l:+k.l,c:+k.c,v:+k.v,n:+k.n||0,tb:+k.V||0,source:'kline'};let c=S.candleMap.get(t);if(!c){S.candleMap.set(t,inc);S.candles.push(inc);S.candles.sort((a,b)=>a.t-b.t);if(S.candles.length>CFG.maxCandles){const old=S.candles.shift();S.candleMap.delete(old.t)}onNewMinute(t)}else{c.o=inc.o;c.h=Math.max(c.h,inc.h);c.l=Math.min(c.l,inc.l);c.c=inc.c;c.v=inc.v;c.tb=inc.tb;c.n=inc.n;c.source='kline'}S.depth.flowAt=now()}
+function mergeCandles(incoming,route){const before=S.candles.length,currentKey=minuteKey(now()),liveCur=S.candleMap.get(currentKey)?{...S.candleMap.get(currentKey)}:null,map=new Map(S.candles.map(c=>[c.t,c]));for(const raw of incoming||[]){const c=normalizeCandle(raw);if(!c)continue;const old=map.get(c.t);if(old&&(old.source==='live'||old.source==='kline'))map.set(c.t,{...c,h:Math.max(c.h,old.h),l:Math.min(c.l,old.l),c:old.c,v:Math.max(c.v,old.v),tb:Math.max(c.tb,old.tb),source:old.source});else map.set(c.t,c)}if(liveCur)map.set(currentKey,liveCur);S.candles=Array.from(map.values()).sort((a,b)=>a.t-b.t).slice(-CFG.maxCandles);rebuildMap();S.continuity.retainedBars=S.candles.length;S.continuity.lastMergedAt=now();S.continuity.lastBootstrapRoute=route;S.continuity.currentMinutePreserved=!!liveCur;S.continuity.lastError='NONE';saveCandles('bootstrap-merge');log('Keel continuity merged',{bars:S.candles.length,route})}
+function loadCandles(){try{const x=JSON.parse(localStorage.getItem(STORE.candles)||'null');const arr=Array.isArray(x)?x:(x&&Array.isArray(x.candles)?x.candles:[]);S.candles=arr.map(normalizeCandle).filter(Boolean).sort((a,b)=>a.t-b.t).slice(-CFG.maxCandles);rebuildMap();S.continuity.restoredBars=S.candles.length;if(x&&x.continuity)S.continuity={...S.continuity,...x.continuity,restoredBars:S.candles.length};if(S.candles.length){S.price=S.candles[S.candles.length-1].c;log('Keel memory restored',{bars:S.candles.length})}}catch(e){S.continuity.lastError='RESTORE '+e.message}}
+function saveCandles(reason='periodic'){if(!isPrimary()&&reason!=='import')return;try{S.continuity.retainedBars=S.candles.length;S.continuity.lastSavedAt=now();S.continuity.saveCount++;localStorage.setItem(STORE.candles,JSON.stringify({engine:CFG.engine,symbol:CFG.symbolBingX,candles:S.candles.slice(-CFG.maxCandles),continuity:S.continuity,savedAt:S.continuity.lastSavedAt,reason}))}catch(e){S.continuity.lastError='SAVE '+e.message}}
+async function bootstrapCandles(){if(S.bootstrapPromise)return S.bootstrapPromise;S.bootstrapPromise=(async()=>{for(const r of REST_KLINES){try{const res=await fetch(r.url,{cache:'no-store'});const j=await res.json();const data=Array.isArray(j)?j:(Array.isArray(j.data)?j.data:[]);if(!data.length)throw new Error('no rows');mergeCandles(data,r.name);if(S.candles.length&&!S.price)S.price=S.candles[S.candles.length-1].c;computeSea();anchorReconcile();return true}catch(e){S.continuity.lastError=r.name+' '+e.message;log('Keel route skipped',{route:r.name,error:String(e.message).slice(0,60)})}}return false})().finally(()=>{S.bootstrapPromise=null});return S.bootstrapPromise}
+/* ---------- ZV-HARBOR: live feeds (ported plumbing, re-flagged) ---------- */
+function freshestFeedAt(){return Math.max(S.lastLive||0,S.guardian.lastMessageAt||0,S.depth.flowAt||0)}
+function socketState(ws){return !ws?'NONE':ws.readyState===0?'CONNECTING':ws.readyState===1?'OPEN':ws.readyState===2?'CLOSING':'CLOSED'}
+function feedUpdate(px,source){px=Number(px);if(!(px>0))return;S.price=px;S.lastLive=now();S.lastSource=source;S.guardian.lastMessageAt=S.lastLive;updateCandle(px,S.lastLive);anchorTick(px,S.lastLive);if(now()-S.lastRender>300)render()}
+async function restPulse(){try{const r=await fetch('https://fapi.binance.com/fapi/v1/ticker/24hr?symbol=1000PEPEUSDT',{cache:'no-store'});const m=await r.json(),p=Number(m.lastPrice||m.close||m.price);if(p>0){S.guardian.lastRoute='REST_PULSE';S.t24={hi:+m.highPrice,lo:+m.lowPrice,chgPts:Math.round(+m.priceChange/CFG.point),chgPct:+m.priceChangePercent,at:now()};feedUpdate(p,'REST pulse');return true}}catch(e){S.guardian.lastError='REST '+String(e.message).slice(0,40)}return false}
+function startHeartbeat(ws,gen){if(S.guardian.heartbeatTimer)clearInterval(S.guardian.heartbeatTimer);S.guardian.heartbeatTimer=setInterval(()=>{if(S.ws!==ws||gen!==S.socketGen)return;const age=now()-freshestFeedAt();if(ws.readyState===1)try{ws.send('Ping')}catch(e){}if(age>30000)rescueFeed('heartbeat silent')},8000)}
+function connectBingX(){const t=now();if(S.ws&&(S.ws.readyState===0||S.ws.readyState===1))return;if(t-S.lastConnectAttempt<1500)return;S.lastConnectAttempt=t;if(S.bingxTries>=4){connectFallback();return}S.bingxTries++;const gen=++S.socketGen;let ws;try{ws=new WebSocket('wss://open-api-swap.bingx.com/swap-market');S.ws=ws;ws.binaryType='arraybuffer'}catch(e){connectFallback();return}
+ ws.onopen=()=>{if(S.ws!==ws||gen!==S.socketGen)return;S.guardian.lastRoute='BINGX_WS';S.guardian.lastMessageAt=now();startHeartbeat(ws,gen);try{ws.send(JSON.stringify({id:'zv-pulse-'+gen,reqType:'sub',dataType:CFG.tickerChannel}));log('Harbor subscribed BingX pulse',{ch:CFG.tickerChannel})}catch(e){S.guardian.lastError=e.message}};
+ ws.onmessage=async ev=>{if(S.ws!==ws||gen!==S.socketGen)return;const txt=await decodeFrame(ev.data);if(!txt)return;if(txt==='Ping'){try{ws.send('Pong')}catch(e){}return}let m;try{m=JSON.parse(txt)}catch(e){return}if(m&&m.ping){try{ws.send(JSON.stringify({pong:m.ping}))}catch(e){}return}const p=extractPrice(m);if(p)feedUpdate(p,'BingX pulse')};
+ ws.onclose=()=>{if(S.ws===ws){S.ws=null;if(now()-freshestFeedAt()>10000)setTimeout(connectBingX,1800)}};
+ ws.onerror=()=>{S.guardian.lastError='BINGX_WS_ERROR';try{ws.close()}catch(e){}}}
+function connectFlow(){if(S.wsFlow&&(S.wsFlow.readyState===0||S.wsFlow.readyState===1))return;let ws;try{ws=new WebSocket('wss://fstream.binance.com/ws/1000pepeusdt@kline_1m');S.wsFlow=ws}catch(e){return}
+ ws.onmessage=e=>{try{const m=JSON.parse(e.data);if(m&&m.k){applyKline(m.k);if(now()-S.lastLive>2500)feedUpdate(m.k.c,'Binance flow')}}catch(err){}};
+ ws.onclose=()=>{S.wsFlow=null;setTimeout(connectFlow,3000)};ws.onerror=()=>{try{ws.close()}catch(e){}}}
+function connectFallback(){if(S.fbTries>=8)return;S.fbTries++;let ws;try{ws=new WebSocket('wss://fstream.binance.com/ws/1000pepeusdt@ticker');S.wsFb=ws}catch(e){return}ws.onmessage=e=>{try{const m=JSON.parse(e.data);if(m&&m.c){S.guardian.lastRoute='BINANCE_WS_FB';feedUpdate(m.c,'Binance fallback')}}catch(err){}};ws.onclose=()=>{if(now()-freshestFeedAt()>10000)setTimeout(connectFallback,1800)};ws.onerror=()=>{try{ws.close()}catch(e){}}}
+function closeSockets(){try{if(S.guardian.heartbeatTimer)clearInterval(S.guardian.heartbeatTimer)}catch(e){}for(const k of ['ws','wsFlow','wsFb'])try{if(S[k]){S[k].onclose=null;S[k].onerror=null;S[k].onmessage=null;S[k].close()}}catch(e){}S.ws=null;S.wsFlow=null;S.wsFb=null;S.socketGen++}
+function rescueFeed(reason){const t=now();if(t-S.guardian.lastRescue<20000)return;S.guardian.lastRescue=t;S.guardian.rescueCount++;S.guardian.lastError=reason;log('Watchkeeper rescue',{reason,count:S.guardian.rescueCount});restPulse();S.bingxTries=0;S.fbTries=0;closeSockets();setTimeout(()=>{connectBingX();connectFlow()},900)}
+function startGuardian(){if(S.guardian.pulseTimer)clearInterval(S.guardian.pulseTimer);if(S.guardian.watchdogTimer)clearInterval(S.guardian.watchdogTimer);S.guardian.pulseTimer=setInterval(()=>{const age=now()-freshestFeedAt();if(!freshestFeedAt()||age>15000||socketState(S.ws)!=='OPEN')restPulse()},15000);S.guardian.watchdogTimer=setInterval(()=>{const age=now()-freshestFeedAt();if(freshestFeedAt()&&age>40000)rescueFeed('stale '+Math.round(age/1000)+'s')},5000)}
+function wake(reason){const t=now();if(t-S.lastWakeAt<2500)return;S.lastWakeAt=t;saveCandles('wake-'+reason);bootstrapCandles();pollDepth();const age=t-freshestFeedAt();if(age>12000||socketState(S.ws)!=='OPEN'){restPulse();S.bingxTries=0;S.fbTries=0;closeSockets();setTimeout(()=>{connectBingX();connectFlow()},500)}render(true)}
+/* ---------- ZV-SOUNDING: depth leg (new, Binance ±1% band) ---------- */
+async function pollDepth(){try{const r=await fetch('https://fapi.binance.com/fapi/v1/depth?symbol=1000PEPEUSDT&limit=500',{cache:'no-store'});const m=await r.json();if(!m.bids||!m.asks)return;const bb=+m.bids[0][0],ba=+m.asks[0][0],mid=(bb+ba)/2;let B=0,A=0;for(const [p,qy] of m.bids){if(+p<mid*0.99)break;B+=+qy}for(const [p,qy] of m.asks){if(+p>mid*1.01)break;A+=+qy}const imb=(B-A)/(B+A);S.depth.ring.push({t:now(),imb});if(S.depth.ring.length>50)S.depth.ring.shift();S.depth.at=now()}catch(e){}}
+/* ---------- ZV-TIDE / ZV-DRAUGHT: sea state from candle memory ---------- */
+function closedCandles(){const cur=minuteKey(now());return S.candles.filter(c=>c.t<cur)}
+function computeSea(){const cc=closedCandles();if(cc.length<40){S.sea.tide=-1;return}const n=cc.length;let series=[];const maxBack=Math.min(n-39,800);for(let i=n-maxBack;i<n;i++){let s=0;for(let k=i-38;k<=i;k++)s+=(cc[k].h-cc[k].l);series.push({t:cc[i].t,r:(s/39)/CFG.point})}S.sea.series=series;const r39=series[series.length-1].r;const tide=r39<ZVT.tideCuts[0]?0:(r39<ZVT.tideCuts[1]?1:2);let age=0;for(let i=series.length-1;i>=0;i--){const tt=series[i].r<ZVT.tideCuts[0]?0:(series[i].r<ZVT.tideCuts[1]?1:2);if(tt===0)age++;else break}
+ const bp=350*CFG.point/(S.price||cc[n-1].c)*1e4;const dr=bp<ZVT.draughtCuts[0]?0:(bp<ZVT.draughtCuts[1]?1:2);
+ if(S.sea.tide>=0&&tide!==S.sea.tide)log('TIDE SHIFT',{from:S.sea.tide,to:tide,r39:Math.round(r39)});
+ S.sea.tide=tide;S.sea.dr=dr;S.sea.age=tide===0?age:0;S.sea.r39=r39}
+function hazardFor(age){if(age<60)return {b:'1-60m',p:ZVT.hazard['1-60m']};if(age<240)return {b:'60-240m',p:ZVT.hazard['60-240m']};if(age<720)return {b:'240-720m',p:ZVT.hazard['240-720m']};return {b:'>720m',p:ZVT.hazard['>720m']}}
+function cellFor(T){const t=S.sea.tide,d=S.sea.dr;const kd=T+'_t'+t+'_d'+d,kt=T+'_t'+t;if(ZVT.fam[kd])return {e:ZVT.fam[kd],src:'CELL',base:ZVT.fam[kt]};return {e:ZVT.fam[kt],src:'TIDE',base:ZVT.fam[kt]}}
+/* ---------- ZV-PULSE: 13m micro composite (frozen logistic) ---------- */
+function computeMicro(){const cc=closedCandles();if(cc.length<41||S.sea.r39==null)return {p:null,why:'candle memory filling'};const n=cc.length;const mom=(cc[n-1].c-cc[n-40].c)/CFG.point/S.sea.r39;let sv=0,st=0,ok=0;for(let i=n-13;i<n;i++){sv+=cc[i].v;st+=cc[i].tb;if(cc[i].tb>0)ok++}if(!(sv>0)||ok<8)return {p:null,why:'flow leg (Binance kline) not yet feeding taker volume'};const tf=st/sv-0.5;const ring=S.depth.ring;if(ring.length<2||now()-S.depth.at>180000)return {p:null,why:'depth leg stale'};const cut=now()-39*60000;let past=ring[0];for(const x of ring){if(x.t<=cut)past=x;else break}if(past.t>cut+90000)return {p:null,why:'depth ring shorter than 39m'};const dimb=ring[ring.length-1].imb-past.imb;const X=[mom,tf,dimb],M=ZVT.micro;let z=M.b;for(let i=0;i<3;i++)z+=M.coef[i]*(X[i]-M.mu[i])/M.sd[i];return {p:1/(1+Math.exp(-z)),why:null}}
+/* ---------- ZV-LIGHTHOUSE: the narrator ---------- */
+function pc(x){return Math.round(x*100)+'%'}
+function buildNarr(){if(S.sea.tide<0)return 'Charging the lamp… candle memory below 40 bars.';const T=S.focusT,{e,src,base}=cellFor(T);const s=(e.s?e:base).s,r=(e.s?e:base).r;const tideN=['LOW','MID','HIGH'][S.sea.tide],drN=['points-cheap (high sea level)','mid-draught','points-dear (low sea level)'][S.sea.dr];
+ let L=['SEA STATE: '+tideN+' tide · '+drN+'.'];
+ if(S.sea.tide===0){const hz=hazardFor(S.sea.age);L.push('Compression age '+(S.sea.age>=720?'>720m':S.sea.age+'m')+' ('+hz.b+'): '+pc(hz.p)+' chance the sea wakes within 39m; stale seas entrench.')}
+ L.push(T+'p RUNWAY: '+pc(e.p)+' within 8h — '+pc(s[1])+' inside 39m, '+pc(s[2])+' inside 79m; miss the first 79m and the window still pays '+pc(r)+'. ['+(e.s?'cell-grade':'tide-grade')+' schedule]');
+ L.push('IF LONG: '+pc(e.L[0])+' prints; drag budget ~'+e.L[1]+'p typical, '+e.L[2]+'p plan, '+e.L[3]+'p storm-case.');
+ L.push('IF SHORT: '+pc(e.S[0])+' prints; drag ~'+e.S[1]+'/'+e.S[2]+'/'+e.S[3]+'p.');
+ L.push('SIDE: COIN — no direction confidence has survived the out-of-sample gates at pathway scale.');
+ const mp=computeMicro();if(mp.p!=null){const lean=mp.p>=0.5?'UP':'DOWN';L.push('MICRO-PULSE (13m, fill-timing only): leaning '+lean+' '+pc(Math.max(mp.p,1-mp.p))+'.')}
+ L.push('FAMILY: '+TG.map(t=>{const c=cellFor(t).e;return t+'p '+pc(c.p)}).join(' | '));
+ return L.join('\n')}
+/* ---------- ZV-ANCHOR: live adverse-path truth ---------- */
+function freshAnchorRows(){const r={};for(const T of TG)r[T]={L:{at:null,adv:null,amb:false},S:{at:null,adv:null,amb:false}};return r}
+function armAnchor(){if(!isPrimary()){vs('View-only helm: arming disabled.','warn');return}if(!S.price)return;S.anchor={t:now(),px:S.price,runHi:S.price,runLo:S.price,rows:freshAnchorRows(),lastRecon:minuteKey(now())};log('ANCHOR ARMED',{px:fmtPrice(S.price)});saveState();render(true)}
+function disarmAnchor(){if(!S.anchor)return;S.anchorHist.unshift({t:S.anchor.t,px:S.anchor.px,end:now(),rows:S.anchor.rows,runHi:S.anchor.runHi,runLo:S.anchor.runLo});S.anchorHist=S.anchorHist.slice(0,20);log('ANCHOR RELEASED',{held:Math.round((now()-S.anchor.t)/60000)+'m'});S.anchor=null;saveState();render(true)}
+function anchorTick(px,t){const a=S.anchor;if(!a)return;a.runHi=Math.max(a.runHi,px);a.runLo=Math.min(a.runLo,px);for(const T of TG){const up=a.px+T*CFG.point,dn=a.px-T*CFG.point,row=a.rows[T];
+ if(!row.L.at&&px>=up){row.L.at=t;row.L.adv=Math.max(0,Math.round((a.px-a.runLo)/CFG.point));log('PATH PRINT LONG '+T+'p',{adv:row.L.adv})}
+ if(!row.S.at&&px<=dn){row.S.at=t;row.S.adv=Math.max(0,Math.round((a.runHi-a.px)/CFG.point));log('PATH PRINT SHORT '+T+'p',{adv:row.S.adv})}}}
+function anchorReconcile(){const a=S.anchor;if(!a)return;const cur=minuteKey(now());const cc=S.candles.filter(c=>c.t>=Math.max(a.lastRecon,minuteKey(a.t))&&c.t<cur);let healed=0;for(const c of cc){const preLo=a.runLo,preHi=a.runHi;for(const T of TG){const up=a.px+T*CFG.point,dn=a.px-T*CFG.point,row=a.rows[T];
+  if(!row.L.at&&c.h>=up){row.L.at=c.t+59000;row.L.adv=Math.max(0,Math.round((a.px-preLo)/CFG.point));if(c.l<preLo){row.L.amb=true;row.L.adv=Math.max(row.L.adv,Math.round((a.px-c.l)/CFG.point))}healed++}
+  if(!row.S.at&&c.l<=dn){row.S.at=c.t+59000;row.S.adv=Math.max(0,Math.round((preHi-a.px)/CFG.point));if(c.h>preHi){row.S.amb=true;row.S.adv=Math.max(row.S.adv,Math.round((c.h-a.px)/CFG.point))}healed++}}
+  a.runHi=Math.max(a.runHi,c.h);a.runLo=Math.min(a.runLo,c.l);a.lastRecon=c.t}
+ if(healed)log('Anchor healed from candle memory',{prints:healed})}
+/* ---------- render ---------- */
+function beacon(el,age,warnMs,badMs){el.className='dot '+(age==null?'':(now()-age<warnMs?'ok':(now()-age<badMs?'warn':'')))}
+function render(force){S.lastRender=now();q('px').textContent=fmtPrice(S.price);
+ q('chgPts').textContent=S.t24.chgPts==null?'—':(S.t24.chgPts>0?'+':'')+S.t24.chgPts;q('chgPct').textContent=S.t24.chgPct==null?'—':(S.t24.chgPct>0?'+':'')+S.t24.chgPct.toFixed(2);q('hi24').textContent=fmtPrice(S.t24.hi);q('lo24').textContent=fmtPrice(S.t24.lo);
+ beacon(q('dPulse'),S.lastLive||null,8000,30000);q('agePulse').textContent=ageTxt(S.lastLive);
+ beacon(q('dFlow'),S.depth.flowAt||null,90000,300000);q('ageFlow').textContent=ageTxt(S.depth.flowAt);
+ beacon(q('dDepth'),S.depth.at||null,90000,300000);q('ageDepth').textContent=ageTxt(S.depth.at);
+ q('route').textContent=S.guardian.lastRoute;q('rescues').textContent=S.guardian.rescueCount;q('roleTag').textContent=isPrimary()?'':'VIEW-ONLY · another helm active';
+ const t=S.sea.tide;if(t>=0){const tc=q('tideChip');tc.textContent='TIDE '+['LOW','MID','HIGH'][t]+' · r39 '+Math.round(S.sea.r39)+'p';tc.className='chip t'+t;const dc=q('drChip');dc.textContent='DRAUGHT '+['CHEAP','MID','DEAR'][S.sea.dr];dc.className='chip '+(S.sea.dr===2?'t0':S.sea.dr===1?'t1':'t2');
+  const ac=q('ageChip');if(t===0){const hz=hazardFor(S.sea.age);ac.style.display='';ac.textContent='low '+(S.sea.age>=720?'>720m':S.sea.age+'m')+' · wake '+pc(hz.p)+'/39m'}else ac.style.display='none';
+  q('seaSub').textContent='Tide cuts '+ZVT.tideCuts[0]+'/'+ZVT.tideCuts[1]+'p · draught cuts '+ZVT.draughtCuts[0]+'/'+ZVT.draughtCuts[1]+'bp per 350p · bars '+S.candles.length}
+ const sig=t+'|'+S.sea.dr+'|'+(t===0?hazardFor(S.sea.age).b:'')+'|'+S.focusT+'|'+S.candles.length;
+ if(force||sig!==render.sig){render.sig=sig;q('narr').textContent=buildNarr();renderBoard()}
+ const mp=computeMicro();if(mp.p!=null){q('pNeedle').style.left=(mp.p*100)+'%';const lean=mp.p>=0.5?'UP':'DOWN';q('pulseTxt').textContent=lean+' '+pc(Math.max(mp.p,1-mp.p));q('pulseStatus').textContent='All three legs live (momentum · taker-flow · depth-shift).'}else{q('pulseTxt').textContent='—';q('pulseStatus').textContent='Waiting: '+mp.why}
+ renderAnchor()}
+function renderBoard(){if(S.sea.tide<0){q('board').innerHTML='<div class="sub">Awaiting candle memory (need 40 closed bars)…</div>';return}let html='';for(const T of TG){const {e,src,base}=cellFor(T);const s=(e.s?e:base).s,r=(e.s?e:base).r;
+ html+='<details class="path"><summary><span class="pT">'+T+'p</span><span class="pP">'+pc(e.p)+'</span><span class="chip small t1">≤39m '+pc(s[1])+'</span><span class="tag">'+src+(e.s?' SCHED':'')+'</span></summary><div class="pBody">'
+ +'<div class="schips"><span>≤13m '+pc(s[0])+'</span><span>≤39m '+pc(s[1])+'</span><span>≤79m '+pc(s[2])+'</span><span>≤158m '+pc(s[3])+'</span><span>≤245m '+pc(s[4])+'</span><span>≤480m '+pc(s[5])+'</span><span>renew '+pc(r)+'</span></div>'
+ +'<div class="sideln"><b>LONG</b> '+pc(e.L[0])+' · drag '+e.L[1]+' / '+e.L[2]+' / '+e.L[3]+'p</div>'
+ +'<div class="sideln"><b>SHORT</b> '+pc(e.S[0])+' · drag '+e.S[1]+' / '+e.S[2]+' / '+e.S[3]+'p</div>'
+ +'<div class="sub">drag = p50 / p75 / p90 adverse-first before the print (given it prints)</div></div></details>'}
+ q('board').innerHTML=html}
+function renderAnchor(){const el=q('anchorBody');const a=S.anchor;if(!a){el.innerHTML='<div class="sub">Mark the moment: arm the anchor and the engine tracks every pathway\'s print and the exact adverse drag you would have endured — the live truth-teller of adverse-path frequency.</div><div class="btnrow"><button class="btn" onclick="armAnchor()">⚓ ARM ANCHOR at market</button></div><div class="sub" style="margin-top:6px">Past anchors kept: '+S.anchorHist.length+' (in Vault export)</div>';return}
+ const up=Math.round((a.runHi-a.px)/CFG.point),dn=Math.round((a.px-a.runLo)/CFG.point);
+ let rows='';for(const T of TG){const r=a.rows[T];const cell=x=>x.at?('<span class="ok2">✓</span> '+hhmm(x.at)+' · −'+x.adv+'p'+(x.amb?'≈':'')):'—';rows+='<tr><td class="num"><b>'+T+'p</b></td><td>'+cell(r.L)+'</td><td>'+cell(r.S)+'</td></tr>'}
+ el.innerHTML='<div class="mrow" style="color:var(--ink)"><span>⚓ <b class="num">'+fmtPrice(a.px)+'</b> · '+hhmm(a.t)+'</span><span>held <b class="num">'+Math.round((now()-a.t)/60000)+'m</b></span><span>UP excursion <b class="num">+'+up+'p</b></span><span>DOWN <b class="num">−'+dn+'p</b></span></div>'
+ +'<table class="agrid"><tr><th>Pathway</th><th>LONG print · drag endured</th><th>SHORT print · drag endured</th></tr>'+rows+'</table>'
+ +'<div class="btnrow"><button class="btn warn" onclick="disarmAnchor()">Release anchor → history</button><button class="btn ghost" onclick="disarmAnchor();armAnchor()">Re-arm here</button></div>';}
+/* ---------- ZV-VAULT: state, export, import (ported plumbing) ---------- */
+function saveState(){if(!isPrimary())return;try{localStorage.setItem(STORE.state,JSON.stringify({engine:CFG.engine,version:CFG.version,anchor:S.anchor,anchorHist:S.anchorHist,events:S.events.slice(0,300),t24:S.t24,focusT:S.focusT,savedAt:now()}))}catch(e){}}
+function loadState(){try{const x=JSON.parse(localStorage.getItem(STORE.state)||'null');if(!x)return;S.anchor=x.anchor||null;S.anchorHist=x.anchorHist||[];S.events=Array.isArray(x.events)?x.events:[];S.t24={...S.t24,...(x.t24||{})};S.focusT=x.focusT||550;log('Logbook state restored',{anchors:S.anchorHist.length})}catch(e){}}
+function saveAll(reason){saveCandles(reason);saveState()}
+function exportName(){return 'zevulun_velocity_logbook_'+Date.now()+'.json'}
+function exportJsonStr(){return JSON.stringify({engine:CFG.engine,version:CFG.version,tables:ZVT.v,exportedAt:iso(),symbol:CFG.symbolBingX,point:CFG.point,sea:S.sea.tide>=0?{tide:S.sea.tide,dr:S.sea.dr,age:S.sea.age,r39:Math.round(S.sea.r39||0)}:null,anchor:S.anchor,anchorHistory:S.anchorHist,candleTail:S.candles.slice(-600),events:S.events.slice(0,300),continuity:S.continuity},null,1)}
+function vs(msg,cls){const el=q('vaultStatus');el.textContent=msg;el.className='status'+(cls?' '+cls:'')}
+function downloadJson(json,name){const blob=new Blob([json],{type:'application/json;charset=utf-8'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=name;a.rel='noopener';a.style.display='none';document.body.appendChild(a);a.click();setTimeout(()=>{try{a.remove()}catch(e){}try{URL.revokeObjectURL(url)}catch(e){}},2500)}
+async function shareJson(json,name){const file=new File([json],name,{type:'application/json'});if(navigator.canShare&&navigator.canShare({files:[file]})){await navigator.share({files:[file],title:'Zevulun Velocity logbook'});return true}if(navigator.share){await navigator.share({title:'Zevulun Velocity logbook',text:json.slice(0,9000)});return true}return false}
+function doExport(){try{saveAll('export');const j=exportJsonStr(),n=exportName();q('exportText').value=j;q('exportBox').classList.add('show');downloadJson(j,n);vs('Sealed: '+n+' — if iPhone blocks the download, use Share / Save.');log('Vault export',{bytes:j.length})}catch(e){vs('Export failed: '+e.message,'bad')}}
+function importPayload(p,name){if(!p||typeof p!=='object')throw new Error('invalid payload');const tail=Array.isArray(p.candleTail)?p.candleTail:[];mergeCandles(tail,'IMPORT');if(!S.anchor&&p.anchor)S.anchor=p.anchor;if(Array.isArray(p.anchorHistory)){const seen=new Set(S.anchorHist.map(x=>x.t));for(const x of p.anchorHistory)if(x&&x.t&&!seen.has(x.t))S.anchorHist.push(x);S.anchorHist.sort((a,b)=>b.t-a.t);S.anchorHist=S.anchorHist.slice(0,20)}if(Array.isArray(p.events))S.events=[...S.events,...p.events].slice(0,400);computeSea();anchorReconcile();saveAll('import');log('RESUME IMPORTED',{file:name,tail:tail.length});render(true)}
+function clearSession(){if(!confirm('Clear this helm\'s local memory (candles, anchor, logbook)? Vault exports are unaffected.'))return;try{localStorage.removeItem(STORE.candles);localStorage.removeItem(STORE.state)}catch(e){}location.reload()}
+/* ---------- ZV-WATCH: single-helm lock (light, ported pattern) ---------- */
+function readLock(){try{return JSON.parse(localStorage.getItem(STORE.lock)||'null')}catch(e){return null}}
+function writeLock(){try{localStorage.setItem(STORE.lock,JSON.stringify({id:S.watch.id,ts:now()}))}catch(e){}}
+function initWatch(){const l=readLock();if(l&&l.id!==S.watch.id&&now()-l.ts<CFG.lockTtl){S.watch.role='VIEW'}else{S.watch.role='PRIMARY';writeLock()}S.watch.hb=setInterval(()=>{const l2=readLock();if(S.watch.role==='PRIMARY')writeLock();else if(!l2||now()-l2.ts>=CFG.lockTtl){S.watch.role='PRIMARY';writeLock();log('Helm promoted to PRIMARY')}},CFG.hbMs)}
+/* ---------- boot ---------- */
+function onNewMinute(k){if(k<=S.lastMinute)return;S.lastMinute=k;computeSea();anchorReconcile();saveState()}
+function wire(){q('sealBtn').onclick=()=>{saveAll('manual-seal');vs('Memory sealed to this device.')};q('exportBtn').onclick=doExport;q('importBtn').onclick=()=>q('importInput').click();
+ q('importInput').onchange=()=>{const f=q('importInput').files&&q('importInput').files[0];if(!f)return;const r=new FileReader();r.onload=()=>{try{importPayload(JSON.parse(r.result),f.name);vs('Resume successful: '+f.name)}catch(e){vs('Resume failed: '+e.message,'bad')}};r.readAsText(f)};
+ q('clearBtn').onclick=clearSession;q('downloadBtn').onclick=()=>downloadJson(q('exportText').value||exportJsonStr(),exportName());
+ q('shareBtn').onclick=async()=>{try{const ok=await shareJson(q('exportText').value||exportJsonStr(),exportName());vs(ok?'Share sheet opened.':'Share unavailable; use Copy.',ok?'':'warn')}catch(e){vs('Share cancelled.','warn')}};
+ q('copyBtn').onclick=async()=>{try{await navigator.clipboard.writeText(q('exportText').value||exportJsonStr());vs('Logbook JSON copied.')}catch(e){vs('Copy failed — select text manually.','bad')}};
+ q('closeExportBtn').onclick=()=>q('exportBox').classList.remove('show');
+ const seg=q('focusSeg');TG.forEach(T=>{const b=document.createElement('button');b.textContent=T+'p';if(T===S.focusT)b.className='on';b.onclick=()=>{S.focusT=T;[...seg.children].forEach(x=>x.className='');b.className='on';saveState();render(true)};seg.appendChild(b)})}
+async function start(){loadState();loadCandles();initWatch();wire();render(true);await bootstrapCandles();restPulse();pollDepth();connectBingX();connectFlow();startGuardian();
+ setInterval(()=>{render()},1000);setInterval(()=>{saveAll('periodic')},10000);setInterval(pollDepth,60000);
+ document.addEventListener('visibilitychange',()=>{if(document.hidden)saveAll('visibility-hide');else wake('visibility')});
+ window.addEventListener('focus',()=>wake('focus'));window.addEventListener('pageshow',e=>{if(e.persisted)wake('pageshow')});
+ window.addEventListener('online',()=>wake('online'));window.addEventListener('pagehide',()=>saveAll('pagehide'));window.addEventListener('beforeunload',()=>saveAll('beforeunload'));
+ log('ZEVULUN VELOCITY started',{version:CFG.version,tables:ZVT.v,cells:Object.keys(ZVT.fam).length})}
+start();
+</script>
+</body>
+</html>
